@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import GameCard from "@/components/GameCard";
 import GameCategoryCard from "@/components/GameCategoryCard";
+import NewsLetter from "@/components/NewsLetter";
 
 export default function Home() {
   const {
@@ -23,6 +24,8 @@ export default function Home() {
     categoryHeading,
     categorySubHeading,
   } = styles;
+
+  const { recentSection, heading, subHeading } = recentGamesClasses;
 
   return (
     <>
@@ -88,6 +91,27 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <section id="recent-games" className={recentSection}>
+        <h2 className={heading}>Our Recent Games</h2>
+        <p className={subHeading}>
+          Stay Ahead of the Gaming Curve with our Latest Games.
+        </p>
+        <div className="flex rounded gap-8 flex-wrap py-10">
+          {games.map((game) => (
+            <GameCard
+              key={game.id}
+              gameName={game.name}
+              imageUrl={game.image}
+              price={game.price}
+              slug={game.slug}
+            />
+          ))}
+        </div>
+        <Link href="games" className={latestButton}>
+          See All
+        </Link>
+      </section>
+      <NewsLetter />
     </>
   );
 }
@@ -164,7 +188,7 @@ const styles = {
 };
 
 const recentGamesClasses = {
-  section: "py-16 lg:py-36 px-4 lg:px-36 text-white text-center",
+  recentSection: "py-16 lg:py-36 px-4 lg:px-36 text-white text-center",
   heading: "text-3xl lg:text-4xl font-bold mb-3",
   subHeading: "text-gray-400 max-w-xl mx-auto lg:text-lg",
 };
