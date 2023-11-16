@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import GameCard from "@/components/GameCard";
 import GameCategoryCard from "@/components/GameCategoryCard";
+import NewsLetter from "@/components/NewsLetter";
 
 export default function Home() {
   const {
@@ -110,6 +111,7 @@ export default function Home() {
           See All
         </Link>
       </section>
+      <NewsLetter />
     </>
   );
 }
