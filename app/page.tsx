@@ -1,4 +1,6 @@
 import HeroSection from "@/components/HeroSection";
+import Link from "next/link";
+import Image from "next/image";
 import GameCard from "@/components/GameCard";
 
 export default function Home() {
@@ -11,6 +13,8 @@ export default function Home() {
     featured,
     featuredContent,
   } = sectionClassNames;
+
+  const { gameName, gameDetails, gameImage } = featuredClassNames;
   return (
     <>
       <HeroSection />
@@ -28,6 +32,24 @@ export default function Home() {
               price={game.price}
             />
           ))}
+        </div>
+      </section>
+      <h3 className="font-semibold text-2xl max-w-3xl text-center mx-auto text-primary-dark pt-12 sm:pt-28 pb-8 sm:pb-16 leading-[125%] sm:leading-[187%]">
+        Featured Game
+      </h3>
+      <section className={featured}>
+        <div className={featuredContent}>
+          <h2 className={gameName}>{featuredGame.name}</h2>
+          <p className={gameDetails}>{featuredGame.description}</p>
+          <Link href={`/games/${featuredGame.slug}`}>
+            <Image
+              className={gameImage}
+              src={featuredGame.image}
+              alt={featuredGame.name}
+              width={500}
+              height={500}
+            />
+          </Link>
         </div>
       </section>
     </>
@@ -87,6 +109,12 @@ const featuredGame = {
     "Immerse yourself in a vast fantasy realm where epic battles and strategic conquests await. In 'Eternal Domination,' you'll lead armies, forge alliances, and build your empire from scratch. Command powerful heroes, employ cunning tactics, and unleash your might on the battlefield. Will you rise as the supreme ruler or fall beneath the weight of your ambitions? Join the fray and claim your destiny in this thrilling strategy game.",
   slug: "eternal-domination",
   image: "/images/trending.jpeg",
+};
+
+const featuredClassNames = {
+  gameName: "font-bold text-2xl md:text-3xl lg:text-4xl mb-4 md:mb-8",
+  gameDetails: "max-w-screen-md text-sm mb-8 md:mb-12",
+  gameImage: "h-72 md:h-96 lg:h-112 w-full object-cover rounded-lg",
 };
 
 const categories = [
