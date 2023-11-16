@@ -2,6 +2,7 @@ import HeroSection from "@/components/HeroSection";
 import Link from "next/link";
 import Image from "next/image";
 import GameCard from "@/components/GameCard";
+import GameCategoryCard from "@/components/GameCategoryCard";
 
 export default function Home() {
   const {
@@ -15,6 +16,14 @@ export default function Home() {
   } = sectionClassNames;
 
   const { gameName, gameDetails, gameImage } = featuredClassNames;
+
+  const {
+    categorySection,
+    categoryContent,
+    categoryHeading,
+    categorySubHeading,
+  } = styles;
+
   return (
     <>
       <HeroSection />
@@ -50,6 +59,33 @@ export default function Home() {
               height={500}
             />
           </Link>
+        </div>
+      </section>
+      <section
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1592155931584-901ac15763e3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGxheSUyMHN0YXRpb258ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
+        }}
+        className={categorySection}
+      >
+        <div className={categoryContent}>
+          <h2 className={categoryHeading}>Categories</h2>
+          <p className={categorySubHeading}>
+            Explore a wide range of games, offering thrilling adventures,
+            challenging sports, and immersive action game play. Discover new
+            worlds, compete with friends, and embark on epic quests that will
+            keep you entertained for hours.
+          </p>
+          <div className="flex flex-wrap">
+            {categories.map((category) => (
+              <GameCategoryCard
+                key={category.id}
+                categoryImage={category.image}
+                categoryName={category.name}
+                slug={category.slug}
+              />
+            ))}
+          </div>
         </div>
       </section>
     </>
@@ -115,6 +151,22 @@ const featuredClassNames = {
   gameName: "font-bold text-2xl md:text-3xl lg:text-4xl mb-4 md:mb-8",
   gameDetails: "max-w-screen-md text-sm mb-8 md:mb-12",
   gameImage: "h-72 md:h-96 lg:h-112 w-full object-cover rounded-lg",
+};
+
+const styles = {
+  categorySection:
+    "bg-center bg-cover bg-no-repeat py-16 sm:py-20 md:py-28 lg:py-32",
+  categoryContent: "container mx-auto px-4 sm:px-6 md:px-8",
+  categoryHeading:
+    "text-center max-w-md sm:max-w-lg md:max-w-2xl mx-auto text-primary font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-4 leading-[130%,187%,130%,130%]",
+  categorySubHeading:
+    "text-center bg-primary-gradient px-8 rounded-3xl py-5 max-w-md sm:max-w-lg md:max-w-2xl mx-auto text-white text-base sm:text-lg md:text-xl lg:text-2xl mb-8",
+};
+
+const recentGamesClasses = {
+  section: "py-16 lg:py-36 px-4 lg:px-36 text-white text-center",
+  heading: "text-3xl lg:text-4xl font-bold mb-3",
+  subHeading: "text-gray-400 max-w-xl mx-auto lg:text-lg",
 };
 
 const categories = [
