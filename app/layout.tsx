@@ -1,39 +1,40 @@
-import type { Metadata } from 'next'
-import { Montserrat, Poppins } from 'next/font/google'
-import './globals.css'
+import type { Metadata } from "next";
+import { Montserrat, Poppins } from "next/font/google";
+import Header from "@/components/Header";
+import "./globals.css";
 
 // const inter = Inter({ subsets: ['latin'] })
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ['400', '500', '700'],
-  style: ['italic', 'normal'],
-  variable: '--font-poppins'
-})
+  weight: ["400", "500", "700"],
+  style: ["italic", "normal"],
+  variable: "--font-poppins",
+});
 
 const montserrat = Montserrat({
   subsets: ["latin"],
-  weight: ['400', '500', '700'],
-  style: ['italic', 'normal'],
-  variable: '--font-montserrat'
-})
+  weight: ["400", "500", "700"],
+  style: ["italic", "normal"],
+  variable: "--font-montserrat",
+});
 
 export const metadata: Metadata = {
-  title: 'Games Ecommerce Shop',
-  description: 'This is a shop where we sell and deliver games online',
-}
+  title: "Games Ecommerce Shop",
+  description: "This is a shop where we sell and deliver games online",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={ `${poppins.variable} ${montserrat.variable}`}>
+    <html lang="en" className={`${poppins.variable} ${montserrat.variable}`}>
       <body>
-        <header>Header</header>
-        {children}
+        <Header />
+        <main className="bg-primary-gradient min-h-screen">{children}</main>
         <footer>Footer</footer>
       </body>
     </html>
-  )
+  );
 }
