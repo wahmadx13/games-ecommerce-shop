@@ -2,13 +2,7 @@ import { FC } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import gameCardClassNames from "./gameCardClassNames";
-
-interface GameCardProps {
-  gameName: string;
-  imageUrl: string;
-  slug: string;
-  price: number;
-}
+import { GameCardProps } from "@/types/GameCard";
 
 const GameCard: FC<GameCardProps> = (props) => {
   const { containerClass, imageClass, priceClass, gameNameClass } =
