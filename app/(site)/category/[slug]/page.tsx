@@ -1,12 +1,18 @@
 import { NextPage } from "next";
+import { getCategoriesGames } from "@/libs/api";
 import { GameCategoryProps } from "@/types/categoriesPage";
 import categoryPageClassNames from "./categoriesClassNames";
 import NewsLetter from "@/components/NewsLetter";
+import GameCard from "@/components/GameCard";
 
-const GameCategory: NextPage<GameCategoryProps> = (props) => {
+const GameCategory: NextPage<GameCategoryProps> = async (props: {
+  params: { slug: string };
+}) => {
   const {
     params: { slug },
   } = props;
+
+  const games = await getCategoriesGames(slug);
 
   const {
     hero,
@@ -47,7 +53,17 @@ const GameCategory: NextPage<GameCategoryProps> = (props) => {
           Checkout our latest collection of{" "}
           <span className="text-primary">{slug}</span> games
         </p>
-        <div className="flex rounded gap-8 flex-wrap py-10"></div>
+        <div className="flex rounded gap-8 flex-wrap py-10">
+          {games.map((game) => (
+            <GameCard
+              key={game._id}
+              gameName={game.name}
+              imageUrl={game.images[0].url}
+              price={game.price}
+              slug={game.slug.current}
+            />
+          ))}
+        </div>
       </section>
       <NewsLetter />
     </>
