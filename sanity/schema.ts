@@ -1,6 +1,7 @@
 import { type SchemaTypeDefinition } from "sanity";
-import category from "./schemas/category";
+import categorySchema from "./schemas/category";
+import gameSchema from "./schemas/game";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [category],
+  types: [categorySchema, gameSchema],
 };

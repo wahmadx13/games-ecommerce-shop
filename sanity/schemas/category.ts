@@ -1,6 +1,6 @@
 // Schema for Category
 
-const category = {
+const categorySchema = {
   title: "Category",
   name: "category",
   type: "document",
@@ -25,4 +25,4 @@ const category = {
   ],
 };
 
-export default category;
+export default categorySchema;
