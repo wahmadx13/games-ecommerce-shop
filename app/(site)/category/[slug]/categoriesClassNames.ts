@@ -4,7 +4,7 @@ const categoryPageClassNames = {
     "relative bg-primary-gradient inline-block max-w-screen-xl mx-auto px-4 py-8 md:py-12 lg:px-8 lg:py-20",
   title:
     "text-2xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-white",
-  subtitle: "mt-2 md:mt-4 max-w-3xl text-sm md:text-xl text-gray-300",
+  subtitleClass: "mt-2 md:mt-4 max-w-3xl text-sm md:text-xl text-gray-300",
   author: "mt-4 md:mt-6 flex items-center",
   authorAvatar:
     "flex-shrink-0 object-cover h-8 md:h-10 w-8 md:w-10 rounded-full",

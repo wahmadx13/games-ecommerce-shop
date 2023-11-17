@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { getCategoriesGames } from "@/libs/api";
+import { getCategoriesGames, getCategory } from "@/libs/api";
 import { GameCategoryProps } from "@/types/categoriesPage";
 import categoryPageClassNames from "./categoriesClassNames";
 import NewsLetter from "@/components/NewsLetter";
@@ -13,12 +13,13 @@ const GameCategory: NextPage<GameCategoryProps> = async (props: {
   } = props;
 
   const games = await getCategoriesGames(slug);
+  const { subtitle } = await getCategory(slug);
 
   const {
     hero,
     heroContent,
     title,
-    subtitle,
+    subtitleClass,
     author,
     authorAvatar,
     authorName,
@@ -41,9 +42,7 @@ const GameCategory: NextPage<GameCategoryProps> = async (props: {
         <div className={heroContent}>
           <div className="lg:w-3/4">
             <h1 className={title}>{slug.toLocaleUpperCase()}</h1>
-            <p className={subtitle}>
-              A short subtitle that provides more content about the game.
-            </p>
+            <p className={subtitleClass}>{subtitle}</p>
           </div>
         </div>
       </section>

@@ -35,6 +35,13 @@ export const getCategoriesGames = async (slug: string): Promise<Game[]> => {
   return games;
 };
 
+export const getCategory = async (slug: string): Promise<Category> => {
+  const query = `*[_type == "category" && slug.current == "${slug}"][0]`;
+  const category: Category = await sanityClient.fetch({ query });
+
+  return category;
+};
+
 export const getGames = async (): Promise<Game[]> => {
   const query = `*[_type == "game"] {
         name,
