@@ -4,8 +4,11 @@ import Image from "next/image";
 import GameCard from "@/components/GameCard";
 import GameCategoryCard from "@/components/GameCategoryCard";
 import NewsLetter from "@/components/NewsLetter";
+import { getCategories } from "@/libs/api";
 
-export default function Home() {
+export default async function Home() {
+  const categories = await getCategories();
+
   const {
     section,
     trending,
@@ -82,10 +85,10 @@ export default function Home() {
           <div className="flex flex-wrap">
             {categories.map((category) => (
               <GameCategoryCard
-                key={category.id}
+                key={category._id}
                 categoryImage={category.image}
                 categoryName={category.name}
-                slug={category.slug}
+                slug={category.slug.current}
               />
             ))}
           </div>
@@ -192,27 +195,3 @@ const recentGamesClasses = {
   heading: "text-3xl lg:text-4xl font-bold mb-3",
   subHeading: "text-gray-400 max-w-xl mx-auto lg:text-lg",
 };
-
-const categories = [
-  {
-    id: 1,
-    name: "Action",
-    slug: "action",
-    image:
-      "https://images.unsplash.com/photo-1552072092-7f9b8d63efcb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZmlnaHR8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
-  },
-  {
-    id: 2,
-    name: "Adventure",
-    slug: "adventure",
-    image:
-      "https://images.unsplash.com/photo-1536751048178-14106afab4f9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cmFjaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
-  },
-  {
-    id: 3,
-    name: "Sports",
-    slug: "sports",
-    image:
-      "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c3BvcnRzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
-  },
-];
