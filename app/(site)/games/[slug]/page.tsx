@@ -1,8 +1,18 @@
-import { NextPage } from "next";
-import React from "react";
+"use client";
 
-const GameItem: NextPage = (props) => {
-  return <div>GameItem</div>;
+import GameDetailsClient from "@/components/GameDetails/GameDetailsClient";
+import GameDetailsServer from "@/components/GameDetails/GameDetailsServer";
+
+const GameItem = (props: { params: { slug: string } }) => {
+  const {
+    params: { slug },
+  } = props;
+
+  return (
+    <GameDetailsClient slug={slug}>
+      <GameDetailsServer slug={slug} />
+    </GameDetailsClient>
+  );
 };
 
 export default GameItem;
