@@ -1,7 +1,7 @@
 import HeroSection from "@/components/HeroSection";
 import Link from "next/link";
 import Image from "next/image";
-import { getCategories, getGames } from "@/libs/api";
+import { getCategories, getGames, getRecentGames } from "@/libs/api";
 import GameCard from "@/components/GameCard";
 import GameCategoryCard from "@/components/GameCategoryCard";
 import NewsLetter from "@/components/NewsLetter";
@@ -11,6 +11,7 @@ export default async function Home() {
   const games = await getGames();
   const isTrendingGames = games?.filter((game) => game.isTrending);
   const isFeaturedGame = games?.find((game) => game.isFeatured);
+  const recentGames = await getRecentGames();
 
   const {
     section,
@@ -107,7 +108,7 @@ export default async function Home() {
           Stay Ahead of the Gaming Curve with our Latest Games.
         </p>
         <div className="flex rounded gap-8 flex-wrap py-10">
-          {games.map((game) => (
+          {recentGames.map((game) => (
             <GameCard
               key={game._id}
               gameName={game.name}
