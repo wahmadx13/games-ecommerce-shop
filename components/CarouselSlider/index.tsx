@@ -48,9 +48,9 @@ const CarouselSlider: FC<CarouselSliderProps> = (props) => {
           width={700}
           height={700}
           alt={`Slide ${index + 1}`}
-          //   className={`w-full h-full object-cover ${
-          //     index !== currentImageIndex && "hidden"
-          //   }`}
+          className={`w-full h-full object-cover ${
+            index !== currentImageIndex && "hidden"
+          }`}
         />
       ))}
 
