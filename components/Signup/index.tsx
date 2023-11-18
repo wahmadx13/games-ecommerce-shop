@@ -1,5 +1,6 @@
 "use client";
 import { FC, useRef, useState } from "react";
+import { toast } from "react-hot-toast";
 import axios from "axios";
 import signupClassNames from "./signupClassNames";
 import { SignupProps } from "@/types/signupProps";
@@ -26,14 +27,15 @@ const SignUp: FC<SignupProps> = (props) => {
       });
 
       setIsFormSubmitting(false);
-      handleCloseForm();
 
-      if (response.data) window.alert("Sign up success. Please Sign in");
+      if (response.data)
+        toast.success(`${response.statusText}. Please sign in.`);
     } catch (error) {
       setIsFormSubmitting(false);
-      handleCloseForm();
+      toast.error("Something went wrong");
       console.log("error", error);
     }
+    handleCloseForm();
   };
 
   const {
@@ -48,7 +50,7 @@ const SignUp: FC<SignupProps> = (props) => {
     confirm,
   } = signupClassNames;
   return isSignupFormOpen ? (
-    <div onClick={handleCloseForm} className={container}>
+    <div className={container}>
       <div className={card}>
         <h2 className={heading}>Sign up</h2>
         <form>

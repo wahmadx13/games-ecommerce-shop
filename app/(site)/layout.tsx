@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import "../globals.css";
 import { Providers } from "@/redux/Providers";
 import Cart from "@/components/Cart";
+import Toast from "@/components/Toast";
 
 // const inter = Inter({ subsets: ['latin'] })
 const poppins = Poppins({
@@ -34,6 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.variable} ${montserrat.variable}`}>
       <body>
+        <Toast />
         <Providers>
           <Cart />
           <Header />
