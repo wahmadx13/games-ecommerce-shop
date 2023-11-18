@@ -1,8 +1,10 @@
 {
     "cSpell.words": [
         "Ecommerce",
+        "NEXTAUTH",
         "Parens",
-        "reduxjs"
+        "reduxjs",
+        "wallpaperset"
     ],
     "[typescript]": {
         "editor.defaultFormatter": "vscode.typescript-language-features"
