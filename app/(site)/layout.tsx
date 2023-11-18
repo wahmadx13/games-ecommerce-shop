@@ -3,6 +3,8 @@ import { Montserrat, Poppins } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import "../globals.css";
+import { Providers } from "@/redux/Providers";
+import Cart from "@/components/Cart";
 
 // const inter = Inter({ subsets: ['latin'] })
 const poppins = Poppins({
@@ -32,9 +34,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.variable} ${montserrat.variable}`}>
       <body>
-        <Header />
-        <main className="bg-primary-gradient min-h-screen">{children}</main>
-        <Footer />
+        <Providers>
+          <Cart />
+          <Header />
+          <main className="bg-primary-gradient min-h-screen">{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

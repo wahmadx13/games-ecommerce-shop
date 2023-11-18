@@ -1,7 +1,8 @@
 {
     "cSpell.words": [
         "Ecommerce",
-        "Parens"
+        "Parens",
+        "reduxjs"
     ],
     "[typescript]": {
         "editor.defaultFormatter": "vscode.typescript-language-features"
