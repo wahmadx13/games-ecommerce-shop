@@ -6,6 +6,7 @@ import "../globals.css";
 import { Providers } from "@/redux/Providers";
 import Cart from "@/components/Cart";
 import Toast from "@/components/Toast";
+import { NextAuthProvider } from "@/components/AuthProvider";
 
 // const inter = Inter({ subsets: ['latin'] })
 const poppins = Poppins({
@@ -37,10 +38,12 @@ export default function RootLayout({
       <body>
         <Toast />
         <Providers>
-          <Cart />
-          <Header />
-          <main className="bg-primary-gradient min-h-screen">{children}</main>
-          <Footer />
+          <NextAuthProvider>
+            <Cart />
+            <Header />
+            <main className="bg-primary-gradient min-h-screen">{children}</main>
+            <Footer />
+          </NextAuthProvider>
         </Providers>
       </body>
     </html>
