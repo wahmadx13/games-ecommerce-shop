@@ -1,7 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
+import cartSlice from "./cartSlice";
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    cart: cartSlice,
+  },
   devTools: process.env.NODE_ENV !== process.env.NEXT_PUBLIC_SANITY_DATASET,
 });
 
