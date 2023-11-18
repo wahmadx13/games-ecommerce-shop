@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useAppDispatch } from "@/redux/hooks";
+import { signIn, useSession, signOut } from "next-auth/react";
 import { toggleCart } from "@/redux/features/cartSlice";
 import headerClassNames from "./headerClassNames";
 import Link from "next/link";
@@ -30,6 +31,11 @@ const Header = () => {
 
   const [isSignupFormOpen, setIsSignupFormOpen] = useState(false);
 
+  const { status, data: session } = useSession({
+    required: true,
+    onUnauthenticated() {},
+  });
+
   const { totalQuantity } = useCartTotals();
 
   const dispatch = useAppDispatch();
@@ -40,6 +46,18 @@ const Header = () => {
 
   const toggleForm = () => {
     setIsSignupFormOpen(!isSignupFormOpen);
+  };
+
+  const signinHandler = async () => {
+    try {
+      await signIn();
+    } catch (error) {
+      console.log("sign in error", error);
+    }
+  };
+
+  const logoutHandler = () => {
+    signOut();
   };
 
   return (
@@ -62,24 +80,34 @@ const Header = () => {
                 </button>
               </li>
               <li className="flex items-center justify-center h-7">
-                <Link href="/orders" className={orders}>
-                  Orders
-                </Link>
-                <button className={logoutBtn}>Logout</button>
-                <button onClick={toggleForm} className={signupBtn}>
-                  Sign Up
-                </button>
-                <button className={signinBtn}>
-                  Sign In
-                  <FcGoogle
-                    style={{
-                      fontSize: "25px",
-                      cursor: "pointer",
-                      marginLeft: "12px",
-                    }}
-                    className={link}
-                  />
-                </button>
+                {session?.user && (
+                  <>
+                    <Link href="/orders" className={orders}>
+                      Orders
+                    </Link>
+                    <button onClick={logoutHandler} className={logoutBtn}>
+                      Logout
+                    </button>
+                  </>
+                )}
+                {!session?.user && (
+                  <>
+                    <button onClick={toggleForm} className={signupBtn}>
+                      Sign Up
+                    </button>
+                    <button className={signinBtn} onClick={signinHandler}>
+                      Sign In
+                      <FcGoogle
+                        style={{
+                          fontSize: "25px",
+                          cursor: "pointer",
+                          marginLeft: "12px",
+                        }}
+                        className={link}
+                      />
+                    </button>
+                  </>
+                )}
               </li>
             </ul>
           </nav>
