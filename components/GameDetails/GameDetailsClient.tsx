@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { Game } from "@/types/game";
+import { useAppDispatch } from "@/redux/hooks";
+import { addItemToCart } from "@/redux/features/cartSlice";
 import CarouselSlider from "@/components/CarouselSlider";
 import { getGame } from "@/libs/api";
 import { gameDetailsClientClassNames } from "./gameDetailsClassNames";
@@ -30,6 +32,8 @@ const GameDetailsClient = (props: {
   const [price, setPrice] = useState(0);
   const [gameDetails, setGameDetails] = useState<Game>();
 
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     const fetchGameDetails = async () => {
       const game = await getGame(slug);
@@ -53,6 +57,11 @@ const GameDetailsClient = (props: {
       setQuantity(quantity + 1);
       setPrice(Number(((quantity + 1) * gameDetails.price).toFixed(2)));
     }
+  };
+
+  const handleAddToCart = () => {
+    if (!gameDetails) return;
+    dispatch(addItemToCart({ ...gameDetails, quantity }));
   };
 
   return (
@@ -87,6 +96,7 @@ const GameDetailsClient = (props: {
             )}
             <div className={cartPrice}>$ {price}</div>
             <button
+              onClick={handleAddToCart}
               className={`${button} ${quantity === 0 && disabledButton}`}
               disabled={quantity === 0}
             >

@@ -1,13 +1,18 @@
 "use client";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import Image from "next/image";
 import { RiCloseLine } from "react-icons/ri";
 import { cartClassNames, cartItemClassNames } from "./cartClassNames";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { removeItemFromCart, toggleCart } from "@/redux/features/cartSlice";
+import useCartTotals from "@/hooks/useCartTotals";
 
 const Cart: FC = () => {
   const { showCart, cartItems } = useAppSelector((state) => state.cart);
+
+  const [renderComponent, setRenderComponent] = useState(false);
+
+  const { totalPrice, totalQuantity } = useCartTotals();
 
   const dispatch = useAppDispatch();
 
@@ -40,6 +45,13 @@ const Cart: FC = () => {
     quantity,
     removeButton,
   } = cartItemClassNames;
+
+  useEffect(() => {
+    setRenderComponent(true);
+  }, []);
+
+  if (!renderComponent) return <></>;
+
   return (
     <div
       className={`${cartContainer} ${
@@ -68,7 +80,7 @@ const Cart: FC = () => {
                 <p className={price}>${item.price.toFixed(2)}</p>
               </div>
               <div className={quantityContainer}>
-                <span className={quantity}>2</span>
+                <span className={quantity}>{item.quantity}</span>
                 <button
                   className={removeButton}
                   onClick={() => handleRemoveItem(item._id)}
@@ -84,7 +96,7 @@ const Cart: FC = () => {
       </div>
       <div className={subtotalContainer}>
         <span className={subtotalText}>Subtotal</span>
-        <span className={subtotalPrice}>$999</span>
+        <span className={subtotalPrice}>${totalPrice}</span>
       </div>
       <button className={checkoutBtn}>Checkout</button>
     </div>

@@ -4,11 +4,11 @@ import { Game } from "@/types/game";
 
 export const getCategories = async (): Promise<Category[]> => {
   const query = `*[_type == "category"] {
-        _id,
-        name,
-        slug {current},
-        image,
-        subtitle
+    _id,
+    name,
+    slug {current},
+    image,
+    subtitle
     }`;
   const categories: Category[] = await sanityClient.fetch({ query });
 
@@ -44,20 +44,20 @@ export const getCategory = async (slug: string): Promise<Category> => {
 
 export const getGames = async (): Promise<Game[]> => {
   const query = `*[_type == "game"] {
-        name,
-        price,
-        images,
-        isFeatured,
-        isTrending,
-        'category': *[_id == ^.category_ref][0] {
-            name,
-            slug {
-                current
-            }
-        },
-        slug,
-        quantity,
-        description
+    name,
+    price,
+    images,
+    isFeatured,
+    isTrending,
+    'category': *[_id == ^.category_ref][0] {
+      name,
+      slug {
+        current
+      }
+    },
+    slug,
+    quantity,
+    description
     }`;
   const games: Game[] = await sanityClient.fetch({ query });
   return games;
@@ -65,20 +65,20 @@ export const getGames = async (): Promise<Game[]> => {
 
 export const getRecentGames = async (): Promise<Game[]> => {
   const query = `*[_type == "game"] | order(_createdAt desc)[0...4] {
-        name,
-        price,
-        images,
-        isFeatured,
-        isTrending,
-        'category': *[_id == ^.category_ref][0] {
-            name,
-            slug {
-                current
-            }
-        },
-        slug,
-        quantity,
-        description
+    name,
+    price,
+    images,
+    isFeatured,
+    isTrending,
+    'category': *[_id == ^.category_ref][0] {
+      name,
+      slug {
+        current
+      }
+    },
+    slug,
+    quantity,
+    description
     }`;
   const games: Game[] = await sanityClient.fetch({ query });
   return games;
@@ -86,6 +86,7 @@ export const getRecentGames = async (): Promise<Game[]> => {
 
 export const getGame = async (slug: string): Promise<Game> => {
   const query = `*[_type == "game" && slug.current == "${slug}"][0]{
+    _id,
     name,
     price,
     images,
