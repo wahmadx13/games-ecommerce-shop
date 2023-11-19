@@ -2,9 +2,11 @@
 import { FC, useEffect, useState } from "react";
 import Image from "next/image";
 import { RiCloseLine } from "react-icons/ri";
+import axios from "axios";
 import { cartClassNames, cartItemClassNames } from "./cartClassNames";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { removeItemFromCart, toggleCart } from "@/redux/features/cartSlice";
+import { getStripe } from "@/libs/loadStripe";
 import useCartTotals from "@/hooks/useCartTotals";
 
 const Cart: FC = () => {
@@ -12,7 +14,7 @@ const Cart: FC = () => {
 
   const [renderComponent, setRenderComponent] = useState(false);
 
-  const { totalPrice, totalQuantity } = useCartTotals();
+  const { totalPrice } = useCartTotals();
 
   const dispatch = useAppDispatch();
 
@@ -49,6 +51,14 @@ const Cart: FC = () => {
   useEffect(() => {
     setRenderComponent(true);
   }, []);
+
+  const checkoutHandler = async () => {
+    const stripe = await getStripe();
+    const { data } = await axios.post("/api/stripe", cartItems);
+    if (!data) return;
+
+    stripe.redirectToCheckout({ sessionId: data.id });
+  };
 
   if (!renderComponent) return <></>;
 
@@ -98,7 +108,9 @@ const Cart: FC = () => {
         <span className={subtotalText}>Subtotal</span>
         <span className={subtotalPrice}>${totalPrice}</span>
       </div>
-      <button className={checkoutBtn}>Checkout</button>
+      <button onClick={checkoutHandler} className={checkoutBtn}>
+        Checkout
+      </button>
     </div>
   );
 };
