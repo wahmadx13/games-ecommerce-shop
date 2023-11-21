@@ -1,9 +1,9 @@
 // Schema for Order
 
 const orderSchema = {
-  title: "Order",
   name: "order",
   type: "document",
+  title: "Order",
   fields: [
     {
       name: "userEmail",
