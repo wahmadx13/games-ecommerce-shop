@@ -1,6 +1,7 @@
 "use client";
 import { FC, useEffect, useState } from "react";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 import { RiCloseLine } from "react-icons/ri";
 import axios from "axios";
 import { cartClassNames, cartItemClassNames } from "./cartClassNames";
@@ -13,6 +14,8 @@ const Cart: FC = () => {
   const { showCart, cartItems } = useAppSelector((state) => state.cart);
 
   const [renderComponent, setRenderComponent] = useState(false);
+
+  const { data: session } = useSession();
 
   const { totalPrice } = useCartTotals();
 
@@ -54,8 +57,13 @@ const Cart: FC = () => {
 
   const checkoutHandler = async () => {
     const stripe = await getStripe();
-    const { data } = await axios.post("/api/stripe", cartItems);
+    const { data } = await axios.post("/api/stripe", {
+      cartItems,
+      userEmail: session?.user?.email,
+    });
     if (!data) return;
+
+    localStorage.removeItem("cart");
 
     stripe.redirectToCheckout({ sessionId: data.id });
   };
