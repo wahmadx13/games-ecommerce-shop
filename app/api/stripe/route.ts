@@ -38,6 +38,7 @@ export async function POST(req: Request, res: Response) {
       mode: "payment",
       success_url: `${origin}/?paid=true`,
       cancel_url: `${origin}/?paid=false`,
+      phone_number_collection: { enabled: true },
     });
 
     await updateGameQuantity(updatedItems);
