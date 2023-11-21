@@ -2,14 +2,14 @@ import Stripe from "stripe";
 import { NextResponse } from "next/server";
 import { Game, GameSubset } from "@/types/game";
 import { fetchAndCalculateItemPriceAndQuantity } from "@/utils/helper";
-import { updateGameQuantity } from "@/libs/api";
+import { createOrder, updateGameQuantity } from "@/libs/api";
 
 const stripe = new Stripe(process.env.NEXT_STRIPE_SECRET_KEY as string, {
   apiVersion: "2023-10-16",
 });
 
 export async function POST(req: Request, res: Response) {
-  const cartItems = (await req.json()) as Game[];
+  const { cartItems, userEmail } = await req.json();
   const origin = req.headers.get("origin");
 
   const updatedItems: GameSubset[] =
@@ -42,6 +42,8 @@ export async function POST(req: Request, res: Response) {
     });
 
     await updateGameQuantity(updatedItems);
+
+    await createOrder(updatedItems, userEmail);
 
     return NextResponse.json(session, {
       status: 200,

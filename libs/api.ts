@@ -130,3 +130,34 @@ export const updateGameQuantity = async (games: GameSubset[]) => {
 
   return response.data;
 };
+
+export const createOrder = async (games: GameSubset[], userEmail: string) => {
+  const mutation = {
+    mutations: [
+      {
+        create: {
+          _type: "order",
+          items: games.map((game, index) => ({
+            _type: "orderItem",
+            game: {
+              _key: index,
+              _type: "reference",
+              _ref: game._id,
+            },
+            quantity: game.quantity,
+          })),
+          userEmail: userEmail,
+          orderStatus: "pending",
+        },
+      },
+    ],
+  };
+
+  const response = await axios.post(
+    `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2021-06-07/data/mutate/${process.env.NEXT_PUBLIC_SANITY_DATASET}`,
+    mutation,
+    { headers: { Authorization: `Bearer ${process.env.NEXT_SANITY_TOKEN}` } },
+  );
+
+  return response.data;
+};

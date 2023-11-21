@@ -11,16 +11,6 @@ const orderSchema = {
       type: "string",
     },
     {
-      name: "phoneNumber",
-      title: "Phone Number",
-      type: "string",
-    },
-    {
-      name: "shippingAddress",
-      title: "Shipping Address",
-      type: "string",
-    },
-    {
       name: "items",
       title: "Items",
       type: "array",
@@ -42,11 +32,6 @@ const orderSchema = {
           ],
         },
       ],
-    },
-    {
-      name: "totalPrice",
-      title: "Total Price",
-      type: "number",
     },
     {
       name: "orderStatus",
